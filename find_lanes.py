@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+# import matplotlib.pyplot as plt
+# import matplotlib.image as mpimg
+from moviepy.editor import VideoFileClip
 import numpy as np
-import os
 from helper_functions import grayscale, gaussian_blur, canny, \
             region_of_interest, hough_lines, weighted_img
 
@@ -40,9 +40,7 @@ def find_lanes_in_image(img):
     return lines_overlay_img
 
 
-def test_images():
-    for imgName in os.listdir("test_images/"):
-        img = mpimg.imread("test_images/" + imgName)
-        processed_img = find_lanes_in_image(img)
-        plt.imshow(processed_img)
-        plt.show()
+def find_lanes_in_video(video_address, output_address):
+    clip = VideoFileClip(video_address)
+    processed_clip = clip.fl_image(find_lanes_in_image)
+    processed_clip.write_videofile(output_address, audio=False)
