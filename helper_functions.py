@@ -56,62 +56,42 @@ def average_slope(lst):
     return sum([i[0] for i in lst]) / len(lst)
 
 def draw_lines(img, lines=[], color=[255, 0, 0], thickness=2):
-    left_starting_vertices = [
-        200/960*img.shape[1],
-        500/540*img.shape[0],
-        420/960*img.shape[1],
-        340/540*img.shape[0]
-    ]
-    right_starting_vertices = [
-        550/960*img.shape[1],
-        340/540*img.shape[0],
-        800/960*img.shape[1],
-        500/540*img.shape[0]
-    ]
-
-    def calculate_slope(x1, y1, x2, y2):
-        xchange = x2-x1
-        ychange = y2-y1
-        if xchange is not 0 and ychange is not 0:
-            slope = ychange/xchange
-            b = x1-(slope*y1)
-            return [slope, b]
-
-    left = [calculate_slope(*left_starting_vertices)]
-    right = [calculate_slope(*right_starting_vertices)]
+    left = []
+    right = []
 
     for line in lines:
         for x1, y1, x2, y2 in line:
-            coefficients = calculate_slope(x1, y1, x1, y2)
-            if coefficients[0] < 0 and x1 < img.shape[1]/2 and x2 < img.shape[1]/2:
+            y_slope = (x2-x1)/(y2-y1)
+            x_slope = (y2-y1)/(x2-x1)
+            b = x1-(y_slope*y1)
+            if x_slope < 0 and x1 < img.shape[1]/2 and x2 < img.shape[1]/2:
                 if len(left) < 2:
-                    left.append(coefficients)
-                elif coefficients[0] > average_slope(left)-(2*stdev([i[0] for i in left])) and coefficients[0] < average_slope(left)+(2*stdev([i[0] for i in left])):
-                    left.append(coefficients)
-            elif coefficients[0] > 0 and x1 >= img.shape[1]/2 and x2 >= img.shape[1]/2:
+                    left.append([y_slope, b])
+                elif y_slope > average_slope(left)-(2*stdev([i[0] for i in left])) and y_slope < average_slope(left)+(2*stdev([i[0] for i in left])):
+                    left.append([y_slope, b])
+            elif x_slope > 0 and x1 >= img.shape[1]/2 and x2 >= img.shape[1]/2:
                 if len(right) < 2:
-                    right.append(coefficients)
-                elif coefficients[0] > average_slope(right)-(2*stdev([i[0] for i in right])) and coefficients[0] < average_slope(right)+(2*stdev([i[0] for i in right])):
-                    right.append(coefficients)
-        
-    print(left)
-    print(right)
+                    right.append([y_slope, b])
+                elif y_slope > average_slope(right)-(2*stdev([i[0] for i in right])) and y_slope < average_slope(right)+(2*stdev([i[0] for i in right])):
+                    right.append([y_slope, b])
 
     def create_coords(side):
         if len(side) is not 0:
             slope = sum([e[0] for e in side]) / len(side)
-            if math.isnan(slope) is False:
+            if slope == float('Inf'):
+                return None
+            else:
                 b = sum([e[1] for e in side]) / len(side)
                 return [
                     (int(slope*img.shape[0]+b), img.shape[0]),
                     (int(slope*(340/540*img.shape[0])+b), int(340/540*img.shape[0]))
                 ]
     
-    # sides = [create_coords(left), create_coords(right)]
+    sides = [create_coords(left), create_coords(right)]
 
-    # for coords in sides:
-    #     if coords:
-    #         cv2.line(img, coords[0], coords[1], color, thickness)
+    for coords in sides:
+        if coords:
+            cv2.line(img, coords[0], coords[1], color, thickness)
 
 def draw_lines_basic(img, lines=[], color=[255, 0, 0], thickness=2):
     for line in lines:
