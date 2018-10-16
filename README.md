@@ -5,7 +5,7 @@
 
 Overview
 ---
-This project serves demonstrates how one could process images and videos to procedurally find the guiding road lanes, using canny edge detection, a region of interest mask, and hough line calculation.
+This project demonstrates how one could process images and videos to procedurally find the guiding road lanes, using canny edge detection, a region of interest mask, and hough line calculation.
 
 Files
 ---
