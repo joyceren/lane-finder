@@ -1,4 +1,4 @@
-# **Lane Finding* 
+# **Lane Finding** 
 <!-- [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 <img src="examples/laneLines_thirdPass.jpg" width="480" alt="Combined Image" /> -->
@@ -13,20 +13,4 @@ Starting in the findlanes.py file, there is the find_lanes_in_images function, (
 
 The test.py file is where the tests are. Run this file to process the images and videos in the test_images and test_videos folder.
 
-Included also are the jupyter notebook file and the project writeup as per project rubric requirement.
-
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
-
-1. Describe the pipeline
-
-2. Identify any shortcomings
-
-3. Suggest possible improvements
-
-We encourage using images in your writeup to demonstrate how your pipeline works.  
-
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).
+Included also are the jupyter notebook file and a Project_Writeup.md as per project rubric requirement.

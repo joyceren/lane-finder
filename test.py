@@ -2,8 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-from find_lanes import find_lanes_in_image
-from video_lanes import find_lanes_in_video
+from find_lanes import find_lanes_in_image, find_lanes_in_video
 
 for imgName in os.listdir("test_images/"):
     img = mpimg.imread("test_images/" + imgName)
